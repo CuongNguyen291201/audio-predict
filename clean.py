@@ -5,7 +5,7 @@ import os
 from glob import glob
 import numpy as np
 import pandas as pd
-from librosa.core import resample, to_mono
+from librosa import resample, to_mono
 from tqdm import tqdm
 import wavio
 
@@ -39,7 +39,7 @@ def downsample_mono(path, sr):
         pass
     except Exception as exc:
         raise exc
-    wav = resample(wav, rate, sr)
+    wav = resample(wav, orig_sr=rate, target_sr=sr)
     wav = wav.astype(np.int16)
     return sr, wav
 
@@ -132,5 +132,5 @@ if __name__ == '__main__':
                         help='threshold magnitude for np.int16 dtype')
     args, _ = parser.parse_known_args()
 
-    #test_threshold(args)
+    # test_threshold(args)
     split_wavs(args)
